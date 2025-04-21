@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.flickrgallery.R
-import com.example.flickrgallery.data.PhotoItem
+import com.example.flickrgallery.models.PhotoItem
 import com.example.flickrgallery.ui.theme.LargeDp
 import com.example.flickrgallery.ui.theme.MediumDp
 import com.example.flickrgallery.ui.theme.PhotoSize
@@ -24,7 +24,7 @@ import com.example.flickrgallery.ui.theme.Purple40
 
 @Composable
 fun PhotoItemUi(
-    photoItem: PhotoItem = PhotoItem(),
+    photoItem: PhotoItem,
     onPhotoClick: (PhotoItem) -> Unit = {}, // TODO: Enlarge photo and display more info
 ) {
 
@@ -54,8 +54,8 @@ fun PhotoItemUiPreview() {
         modifier = Modifier.padding(MediumDp),
         verticalArrangement = Arrangement.spacedBy(MediumDp)
     ) {
-        PhotoItemUi()
-        PhotoItemUi()
-        PhotoItemUi()
+//        PhotoItemUi()
+//        PhotoItemUi()
+//        PhotoItemUi()
     }
 }
