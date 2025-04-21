@@ -1,0 +1,28 @@
+# Reference: https://github.com/github/gitignore/blob/main/Android.gitignore
+# Gradle files
+.gradle
+/build
+
+# Local configuration
+local.properties
+/local.properties
+
+# Log files
+*.log
+
+# Android Studio generated files and folders
+/captures
+.externalNativeBuild
+.cxx
+*.apk
+output.json
+
+# IntelliJ IDE Generated files
+*.iml
+
+# Keystore files
+*.jks
+*.keystore
+
+# macOS folder metadata
+.DS_Store

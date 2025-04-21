@@ -1,0 +1,21 @@
+# Ignored by default
+/shelf/
+
+# IDE generated directories
+/libraries
+/caches
+
+# IDE generated files
+/AndroidProjectSystem.xml
+/assetWizardSettings.xml
+/deploymentTargetSelector.xml
+/gradle.xml
+/kotlinc.xml
+/migrations.xml
+/misc.xml
+/modules.xml
+/navEditor.xml
+/runConfigurations.xml
+/studiobot.xml
+/vcs.xml
+/workspace.xml
