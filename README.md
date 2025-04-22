@@ -19,7 +19,9 @@ Android project created for a take home assessment using the Flickr API.
 - MVVM with Service / Repository
 - Generic paginator (admittedly over-engineered for this use case)
 
-### Other notes
+## Other notes
 - See TODOs for a few things I would like to do
 - If I were to implement caching and/or have a use case where I wanted a local database, I'd use Room
 - Ktor, Koin, Coil, and Jetpack Compose were all new-to-me libraries (outside of using Compose for a few hours on a tutorial project), that I wanted to use for my own learning. It was really enjoyable to see first hand how all these libraries work together, and I definitely want to keep using them.
+
+Recorded video of app: https://photos.app.goo.gl/9kLtmbejtREiHXQX9
