@@ -1,106 +1,110 @@
 package com.example.flickrgallery.composables
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.input.TextFieldState
-import androidx.compose.foundation.text.input.rememberTextFieldState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.semantics.isTraversalGroup
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.traversalIndex
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import com.example.flickrgallery.R
+import com.example.flickrgallery.ui.theme.LargeDp
 import com.example.flickrgallery.ui.theme.MediumDp
+import com.example.flickrgallery.ui.theme.Purple40
+import com.example.flickrgallery.ui.theme.Purple80
+import com.example.flickrgallery.ui.theme.SearchBarTextStyle
 
-// TODO: Either opt to go with simple search bar from the snippet below or make custom search bar
 @Composable
 fun PhotoSearchBar(
     modifier: Modifier = Modifier,
-    onSearchButtonClick: (String) -> Unit = {}
+    onSearch: (String) -> Unit = {}
 ) {
     val input = remember { mutableStateOf("") }
-}
 
-/**
- * Reference: https://developer.android.com/develop/ui/compose/components/search-bar
- *
- * Snippet from
- * https://github.com/android/snippets/blob/d68fdfb1aef23b977360432c83150d8e34a00e97/compose/snippets/src/main/java/com/example/compose/snippets/components/SearchBar.kt#L88-L140
- * Could probably simplify this implementation to not cover screen on focus
- */
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun SimpleSearchBar(
-    modifier: Modifier = Modifier,
-    textFieldState: TextFieldState,
-    onSearch: (String) -> Unit = {},
-    searchResults: List<String> = emptyList()
-) {
-    // Controls expansion state of the search bar
-    var expanded by rememberSaveable { mutableStateOf(false) }
-
-    Box(
-        modifier
-            .padding(vertical = MediumDp)
-            .fillMaxWidth()
-            .semantics { isTraversalGroup = true }
+    Card(
+        shape = RoundedCornerShape(size = MediumDp),
+        modifier = modifier
+            .systemBarsPadding()
+            .padding(MediumDp)
+            .height(64.dp)
+            .fillMaxWidth(),
+        elevation = CardDefaults.cardElevation(defaultElevation = LargeDp),
     ) {
-        SearchBar(
+        Row(
             modifier = Modifier
-                .align(Alignment.TopCenter)
-                .semantics { traversalIndex = 0f },
-            inputField = {
-                SearchBarDefaults.InputField(
-                    query = textFieldState.text.toString(),
-                    onQueryChange = { textFieldState.edit { replace(0, length, it) } },
-                    onSearch = {
-                        onSearch(textFieldState.text.toString())
-                        expanded = false
-                    },
-                    expanded = expanded,
-                    onExpandedChange = { expanded = it },
-                    placeholder = { Text("Search") }
-                )
-            },
-            expanded = expanded,
-            onExpandedChange = { expanded = it },
+                .fillMaxSize()
+                .background(color = Purple40),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            // Display search results in a scrollable column
-            Column(Modifier.verticalScroll(rememberScrollState())) {
-                searchResults.forEach { result ->
-                    ListItem(
-                        headlineContent = { Text(result) },
-                        modifier = Modifier
-                            .clickable {
-                                textFieldState.edit { replace(0, length, result) }
-                                expanded = false
-                            }
-                            .fillMaxWidth()
+            TextField(
+                modifier = Modifier
+                    .weight(1f),
+//                    .testTag(SEARCH_FIELD_TEST_TAG),
+                textStyle = SearchBarTextStyle,
+                value = input.value,
+                onValueChange = { newText -> input.value = newText },
+                placeholder = {
+                    Text(
+                        text = stringResource(id = R.string.search_bar_hint),
+                        style = SearchBarTextStyle.copy(color = Color.White.copy(alpha = 0.5f))
                     )
-                }
+                },
+                singleLine = true,
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    cursorColor = Color.White,
+                    disabledTextColor = Color.White,
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
+                )
+            )
+            // TODO call onSearch when FAB is clicked OR when enter is pressed on keyboard
+            FloatingActionButton(
+                containerColor = Purple80,
+                onClick = {
+//                    if (input.value.isEmpty()) return@FloatingActionButton
+                    onSearch(input.value)
+                    input.value = ""
+                },
+                shape = CircleShape,
+                modifier = Modifier
+                    .padding(end = MediumDp)
+                    .size(32.dp),
+//                    .testTag(SEARCH_FAB_TEST_TAG),
+                elevation = FloatingActionButtonDefaults.elevation(
+                    defaultElevation = 0.dp,
+                    pressedElevation = 0.dp
+                )
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                    contentDescription = null,
+                    tint = Purple80
+                )
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun SimpleSearchBarPreview() {
-    SimpleSearchBar(textFieldState = rememberTextFieldState())
 }
