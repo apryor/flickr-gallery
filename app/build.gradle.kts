@@ -69,4 +69,6 @@ dependencies {
     implementation(libs.lifecycle.runtime.compose)
     implementation(libs.bundles.koin)
     implementation(libs.bundles.coroutines)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 }

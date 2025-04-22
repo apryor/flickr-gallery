@@ -15,6 +15,7 @@ lifecycle = "2.8.7"
 koin = "3.5.6"
 koinCompose = "3.4.6"
 kotlinxCoroutines = "1.10.2"
+coil = "3.1.0"
 
 [libraries]
 # default new project libraries
@@ -58,6 +59,10 @@ koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", versi
 # additional coroutine functionality
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
+
+# coil for image loading
+coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
+coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

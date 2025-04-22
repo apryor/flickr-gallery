@@ -12,15 +12,12 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.flickrgallery.R
+import coil3.compose.AsyncImage
 import com.example.flickrgallery.models.PhotoItem
 import com.example.flickrgallery.ui.theme.LargeDp
 import com.example.flickrgallery.ui.theme.MediumDp
 import com.example.flickrgallery.ui.theme.PhotoSize
-import com.example.flickrgallery.ui.theme.Purple40
 
 @Composable
 fun PhotoItemUi(
@@ -35,14 +32,12 @@ fun PhotoItemUi(
         elevation = CardDefaults.cardElevation(defaultElevation = LargeDp),
         shape = RoundedCornerShape(size = MediumDp)
     ) {
-        //TODO: Update painter with Coil implementation
-        Image(
-            painter = painterResource(id = R.drawable.ic_launcher_foreground),
+        AsyncImage(
+            model = "https://live.staticflickr.com/${photoItem.server}/${photoItem.id}_${photoItem.secret}.jpg",
             contentDescription = null,
             modifier = Modifier
                 .padding(MediumDp)
-                .size(PhotoSize),
-            colorFilter = ColorFilter.tint(Purple40)
+                .size(PhotoSize)
         )
     }
 }
