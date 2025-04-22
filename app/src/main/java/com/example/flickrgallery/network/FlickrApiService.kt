@@ -1,5 +1,6 @@
 package com.example.flickrgallery.network
 
+import com.example.flickrgallery.BuildConfig
 import com.example.flickrgallery.models.PhotoItem
 import com.example.flickrgallery.models.QueryPhotosResponse
 import io.ktor.client.call.body
@@ -9,7 +10,7 @@ import io.ktor.client.request.parameter
 class FlickrApiService {
     companion object {
         private const val BASE_URL = "https://www.flickr.com/services/rest/"
-        private const val API_KEY = "a0222db495999c951dc33702500fdc4d"
+        private const val API_KEY = BuildConfig.API_KEY
         private const val DEFAULT_PER_PAGE = 30
         private const val FORMAT = "json"
     }
