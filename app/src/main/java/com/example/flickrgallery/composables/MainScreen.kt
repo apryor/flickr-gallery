@@ -55,7 +55,6 @@ fun MainScreen() {
 
         AnimatedVisibility(visible = photosUiState.photos.isNotEmpty()) {
             PhotoItemsContainer(
-                onItemClickListener = {}, // TODO Update this to open enlarged photo
                 photos = photosUiState.photos,
                 isEndOfList = photosUiState.endReached,
                 isLoading = photosUiState.isLoading,

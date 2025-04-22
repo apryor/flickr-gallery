@@ -11,11 +11,10 @@ import com.example.flickrgallery.ui.theme.MediumDp
 
 @Composable
 fun PhotoItemsContainer(
-    onItemClickListener: (PhotoItem) -> Unit = {},
     photos: List<PhotoItem> = emptyList(),
     isEndOfList: Boolean = false,
     isLoading: Boolean = false,
-    onLoadMore: () -> Unit = {} // TODO Would prefer this to not invoke a function but emit an intent
+    onLoadMore: () -> Unit = {}
 ) {
 
     LazyVerticalGrid(
@@ -30,7 +29,6 @@ fun PhotoItemsContainer(
             }
             PhotoItemUi(
                 photoItem = photos[index],
-                onPhotoClick = onItemClickListener
             )
         }
     }

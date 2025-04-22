@@ -1,11 +1,14 @@
 package com.example.flickrgallery.composables
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,12 +22,13 @@ import com.example.flickrgallery.ui.theme.PhotoSize
 @Composable
 fun PhotoItemUi(
     photoItem: PhotoItem,
-    onPhotoClick: (PhotoItem) -> Unit = {}, // TODO: Enlarge photo and display more info
 ) {
+    val expandPhoto = remember { mutableStateOf(false) }
 
     Card(
         modifier = Modifier
-            .size(PhotoSize),
+            .size(PhotoSize)
+            .clickable { expandPhoto.value = true },
         elevation = CardDefaults.cardElevation(defaultElevation = LargeDp),
         shape = RoundedCornerShape(size = MediumDp)
     ) {
@@ -34,7 +38,16 @@ fun PhotoItemUi(
             modifier = Modifier
                 .padding(MediumDp)
                 .size(PhotoSize),
-            error = painterResource(R.drawable.ic_launcher_foreground) // TODO replace with error image
+            error = painterResource(R.drawable.ic_error)
+        )
+    }
+
+    if (expandPhoto.value) {
+        PhotoDialog(
+            photoItem = photoItem,
+            onDismiss = {
+                expandPhoto.value = false
+            }
         )
     }
 }
