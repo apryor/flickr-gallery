@@ -17,7 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.flickrgallery.ui.theme.LargeDp
 import com.example.flickrgallery.ui.theme.LargeIconSize
@@ -33,13 +33,16 @@ fun MainScreen() {
     val photosViewModel: PhotosViewModel = koinViewModel<PhotosViewModel>()
     val photosUiState by photosViewModel.photosUiState.collectAsStateWithLifecycle()
 
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         PhotoSearchBar(
             onSearch = {
-                photosViewModel.searchPhotos(it) // TODO Preferably, don't call VM functions directly
+                photosViewModel.searchPhotos(it)
+                keyboardController?.hide()
             }
         )
 
@@ -85,10 +88,4 @@ fun MainScreen() {
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun MainScreenPreview() {
-    MainScreen()
 }

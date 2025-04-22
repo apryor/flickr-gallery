@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
@@ -26,6 +28,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.flickrgallery.R
 import com.example.flickrgallery.ui.theme.LargeDp
 import com.example.flickrgallery.ui.theme.MediumDp
@@ -61,10 +65,15 @@ fun PhotoSearchBar(
             TextField(
                 modifier = Modifier
                     .weight(1f),
-//                    .testTag(SEARCH_FIELD_TEST_TAG),
                 textStyle = SearchBarTextStyle,
                 value = input.value,
                 onValueChange = { newText -> input.value = newText },
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                keyboardActions = KeyboardActions(
+                    onSearch = {
+                        onSearch(input.value)
+                    }
+                ),
                 placeholder = {
                     Text(
                         text = stringResource(id = R.string.search_bar_hint),
@@ -85,28 +94,31 @@ fun PhotoSearchBar(
             )
             // TODO call onSearch when FAB is clicked OR when enter is pressed on keyboard
             FloatingActionButton(
-                containerColor = Purple80,
+                containerColor = Purple40,
                 onClick = {
-//                    if (input.value.isEmpty()) return@FloatingActionButton
                     onSearch(input.value)
-                    input.value = ""
                 },
                 shape = CircleShape,
                 modifier = Modifier
-                    .padding(end = MediumDp)
+                    .padding(end = LargeDp)
                     .size(MediumIconSize),
-//                    .testTag(SEARCH_FAB_TEST_TAG),
                 elevation = FloatingActionButtonDefaults.elevation(
                     defaultElevation = ZeroDp,
                     pressedElevation = ZeroDp
                 )
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_launcher_foreground), // TODO Replace with search icon
+                    painter = painterResource(id = R.drawable.ic_search), // TODO Replace with search icon
                     contentDescription = null,
                     tint = Purple80
                 )
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun PhotoSearchBarPreview() {
+    PhotoSearchBar()
 }

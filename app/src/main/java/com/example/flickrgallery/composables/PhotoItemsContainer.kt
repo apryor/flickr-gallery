@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.flickrgallery.models.PhotoItem
 import com.example.flickrgallery.ui.theme.MediumDp
 
@@ -33,4 +34,18 @@ fun PhotoItemsContainer(
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun PhotoItemsContainerPreview() {
+    PhotoItemsContainer(
+        photos = listOf(
+            PhotoItem("0", "0", "0", "0", 0, "0", 0, 0, 0),
+            PhotoItem("0", "0", "0", "0", 0, "0", 0, 0, 0),
+            PhotoItem("0", "0", "0", "0", 0, "0", 0, 0, 0),
+            PhotoItem("0", "0", "0", "0", 0, "0", 0, 0, 0),
+            PhotoItem("0", "0", "0", "0", 0, "0", 0, 0, 0),
+        )
+    )
 }
