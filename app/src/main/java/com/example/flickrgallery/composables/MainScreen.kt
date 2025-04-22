@@ -18,9 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.flickrgallery.ui.theme.LargeDp
+import com.example.flickrgallery.ui.theme.LargeIconSize
+import com.example.flickrgallery.ui.theme.LargeTextSize
 import com.example.flickrgallery.viewmodel.PhotosViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -65,7 +66,7 @@ fun MainScreen() {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp),
+                    .padding(LargeDp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -74,13 +75,13 @@ fun MainScreen() {
                     contentDescription = "Error",
                     tint = Color.Red,
                     modifier = Modifier
-                        .size(60.dp)
-                        .padding(bottom = 10.dp)
+                        .size(LargeIconSize)
+                        .padding(bottom = LargeDp)
                 )
                 Text(
                     text = "There Was An Error! Try Again...",
                     color = Color.Red,
-                    fontSize = 24.sp
+                    fontSize = LargeTextSize
                 )
             }
         }

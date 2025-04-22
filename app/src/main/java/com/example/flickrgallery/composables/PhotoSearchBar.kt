@@ -26,13 +26,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.example.flickrgallery.R
 import com.example.flickrgallery.ui.theme.LargeDp
 import com.example.flickrgallery.ui.theme.MediumDp
+import com.example.flickrgallery.ui.theme.MediumIconSize
 import com.example.flickrgallery.ui.theme.Purple40
 import com.example.flickrgallery.ui.theme.Purple80
+import com.example.flickrgallery.ui.theme.SearchBarHeight
 import com.example.flickrgallery.ui.theme.SearchBarTextStyle
+import com.example.flickrgallery.ui.theme.ZeroDp
 
 @Composable
 fun PhotoSearchBar(
@@ -46,7 +48,7 @@ fun PhotoSearchBar(
         modifier = modifier
             .systemBarsPadding()
             .padding(MediumDp)
-            .height(64.dp)
+            .height(SearchBarHeight)
             .fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = LargeDp),
     ) {
@@ -92,15 +94,15 @@ fun PhotoSearchBar(
                 shape = CircleShape,
                 modifier = Modifier
                     .padding(end = MediumDp)
-                    .size(32.dp),
+                    .size(MediumIconSize),
 //                    .testTag(SEARCH_FAB_TEST_TAG),
                 elevation = FloatingActionButtonDefaults.elevation(
-                    defaultElevation = 0.dp,
-                    pressedElevation = 0.dp
+                    defaultElevation = ZeroDp,
+                    pressedElevation = ZeroDp
                 )
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                    painter = painterResource(id = R.drawable.ic_launcher_foreground), // TODO Replace with search icon
                     contentDescription = null,
                     tint = Purple80
                 )
