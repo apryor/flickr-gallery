@@ -16,7 +16,7 @@ class FlickrApiService {
 
     // TODO Could probably pull some of these common values out (i.e. api_key, format, nojsoncallback
     suspend fun fetchRecentPhotos(pageNumber: Int = 0): List<PhotoItem> {
-        return httpClient.get(BASE_URL) {
+        val response = httpClient.get(BASE_URL) {
             url {
                 parameter("method", "flickr.photos.getRecent")
                 parameter("api_key", API_KEY)
@@ -25,11 +25,18 @@ class FlickrApiService {
                 parameter("format", FORMAT)
                 parameter("nojsoncallback", 1) // Value 1 to get raw JSON
             }
-        }.body<QueryPhotosResponse>().photos.photo
+        }.body<QueryPhotosResponse>().photos
+
+        return if (pageNumber <= response.pages) {
+            response.photoList
+        } else {
+            emptyList()
+        }
     }
 
+    // TODO Could probably pull some of these common values out (i.e. api_key, format, nojsoncallback
     suspend fun searchPhotos(query: String, pageNumber: Int = 0): List<PhotoItem> {
-        return httpClient.get(BASE_URL) {
+        val response = httpClient.get(BASE_URL) {
             url {
                 parameter("method", "flickr.photos.search")
                 parameter("api_key", API_KEY)
@@ -39,6 +46,12 @@ class FlickrApiService {
                 parameter("format", FORMAT)
                 parameter("nojsoncallback", 1) // Value 1 to get raw JSON
             }
-        }.body<QueryPhotosResponse>().photos.photo
+        }.body<QueryPhotosResponse>().photos
+
+        return if (pageNumber <= response.pages) {
+            response.photoList
+        } else {
+            emptyList()
+        }
     }
 }

@@ -39,11 +39,7 @@ fun MainScreen() {
     ) {
         PhotoSearchBar(
             onSearch = {
-                if (it.isNotEmpty()) {
-                    photosViewModel.searchPhotos(it) // TODO Preferably, don't call VM functions directly
-                } else {
-                    photosViewModel.getRecentPhotos() // TODO Preferably, don't call VM functions directly
-                }
+                photosViewModel.searchPhotos(it) // TODO Preferably, don't call VM functions directly
             }
         )
 
@@ -57,7 +53,10 @@ fun MainScreen() {
         AnimatedVisibility(visible = photosUiState.photos.isNotEmpty()) {
             PhotoItemsContainer(
                 onItemClickListener = {}, // TODO Update this to open enlarged photo
-                photos = photosUiState.photos
+                photos = photosUiState.photos,
+                isEndOfList = photosUiState.endReached,
+                isLoading = photosUiState.isLoading,
+                onLoadMore = { photosViewModel.loadPhotos() }
             )
         }
 
@@ -86,9 +85,6 @@ fun MainScreen() {
             }
         }
     }
-
-    // TODO For pagination, could do something simple like have a button that says "Load more"
-//    Button(onClick = { photosViewModel.getRecentPhotos() }
 }
 
 @Preview

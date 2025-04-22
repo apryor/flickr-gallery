@@ -12,6 +12,9 @@ import com.example.flickrgallery.ui.theme.MediumDp
 fun PhotoItemsContainer(
     onItemClickListener: (PhotoItem) -> Unit = {},
     photos: List<PhotoItem> = emptyList(),
+    isEndOfList: Boolean = false,
+    isLoading: Boolean = false,
+    onLoadMore: () -> Unit = {} // TODO Would prefer this to not invoke a function but emit an intent
 ) {
 
     LazyVerticalGrid(
@@ -20,9 +23,12 @@ fun PhotoItemsContainer(
         verticalArrangement = Arrangement.spacedBy(MediumDp),
         horizontalArrangement = Arrangement.spacedBy(MediumDp),
     ) {
-        items(photos.size) {
+        items(photos.size) { index ->
+            if (index >= photos.size - 1 && !isEndOfList && !isLoading) {
+                onLoadMore()
+            }
             PhotoItemUi(
-                photoItem = photos[it],
+                photoItem = photos[index],
                 onPhotoClick = onItemClickListener
             )
         }

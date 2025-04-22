@@ -11,20 +11,22 @@ class PhotosRepositoryImpl(
     private val flickrApiService: FlickrApiService,
     private val dispatcher: CoroutineDispatcher
 ): PhotosRepository {
-    override suspend fun getRecentPhotos(): NetworkResult<List<PhotoItem>> {
+
+    override suspend fun getRecentPhotos(page: Int): NetworkResult<List<PhotoItem>> {
         return withContext(dispatcher) {
             try {
-                val recentPhotos = flickrApiService.fetchRecentPhotos()
+                val recentPhotos = flickrApiService.fetchRecentPhotos(pageNumber = page)
                 NetworkResult.Success(recentPhotos)
             } catch (e: Exception) {
                 NetworkResult.Error(e.message ?: "Unknown error")
             }
         }
     }
-    override suspend fun searchPhotos(query: String): NetworkResult<List<PhotoItem>> {
+
+    override suspend fun searchPhotos(query: String, page: Int): NetworkResult<List<PhotoItem>> {
         return withContext(dispatcher) {
             try {
-                val searchResults = flickrApiService.searchPhotos(query)
+                val searchResults = flickrApiService.searchPhotos(query = query, pageNumber = page)
                 NetworkResult.Success(searchResults)
             } catch (e: Exception) {
                 NetworkResult.Error(e.message ?: "Unknown error")

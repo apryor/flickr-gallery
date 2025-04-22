@@ -21,5 +21,6 @@ data class Photos(
     @SerialName("perpage")
     val perPage: Int, // leverage for simple pagination
     val total: Int,
-    val photo: List<PhotoItem>
+    @SerialName("photo")
+    val photoList: List<PhotoItem>
 )
