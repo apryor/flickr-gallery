@@ -32,6 +32,7 @@ fun PhotoItemUi(
         elevation = CardDefaults.cardElevation(defaultElevation = LargeDp),
         shape = RoundedCornerShape(size = MediumDp)
     ) {
+        // TODO Pull this URL definition outside of View layer
         AsyncImage(
             model = "https://live.staticflickr.com/${photoItem.server}/${photoItem.id}_${photoItem.secret}_s.jpg",
             contentDescription = null,
