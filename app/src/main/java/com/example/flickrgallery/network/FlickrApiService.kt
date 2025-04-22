@@ -1,22 +1,44 @@
 package com.example.flickrgallery.network
 
 import com.example.flickrgallery.models.PhotoItem
-import com.example.flickrgallery.models.RecentPhotos
-import com.example.flickrgallery.models.RecentPhotosResponse
+import com.example.flickrgallery.models.QueryPhotosResponse
 import io.ktor.client.call.body
 import io.ktor.client.request.get
+import io.ktor.client.request.parameter
 
 class FlickrApiService {
     companion object {
-        private const val BASE_URL = "https://api.flickr.com/services/rest/"
+        private const val BASE_URL = "https://www.flickr.com/services/rest/"
         private const val API_KEY = "a0222db495999c951dc33702500fdc4d"
-        private const val DEFAULT_PER_PAGE = 15
+        private const val DEFAULT_PER_PAGE = 30
+        private const val FORMAT = "json"
     }
 
-    suspend fun fetchRecentPhotos(): List<PhotoItem> {
-        return httpClient
-            // TODO build url, don't hardcode it
-            .get("$BASE_URL?method=flickr.photos.getRecent&api_key=$API_KEY&per_page=$DEFAULT_PER_PAGE&page=1&format=json&nojsoncallback=1")
-            .body<RecentPhotosResponse>().photos.photo
+    // TODO Could probably pull some of these common values out (i.e. api_key, format, nojsoncallback
+    suspend fun fetchRecentPhotos(pageNumber: Int = 0): List<PhotoItem> {
+        return httpClient.get(BASE_URL) {
+            url {
+                parameter("method", "flickr.photos.getRecent")
+                parameter("api_key", API_KEY)
+                parameter("per_page", DEFAULT_PER_PAGE) // Use for pagination
+                parameter("page", pageNumber) // Use for pagination
+                parameter("format", FORMAT)
+                parameter("nojsoncallback", 1) // Value 1 to get raw JSON
+            }
+        }.body<QueryPhotosResponse>().photos.photo
+    }
+
+    suspend fun searchPhotos(query: String, pageNumber: Int = 0): List<PhotoItem> {
+        return httpClient.get(BASE_URL) {
+            url {
+                parameter("method", "flickr.photos.search")
+                parameter("api_key", API_KEY)
+                parameter("text", query)
+                parameter("per_page", DEFAULT_PER_PAGE) // Use for pagination
+                parameter("page", pageNumber) // Use for pagination
+                parameter("format", FORMAT)
+                parameter("nojsoncallback", 1) // Value 1 to get raw JSON
+            }
+        }.body<QueryPhotosResponse>().photos.photo
     }
 }

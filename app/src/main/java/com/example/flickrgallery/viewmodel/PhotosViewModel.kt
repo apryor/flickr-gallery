@@ -17,6 +17,8 @@ data class PhotosUiState(
     val error: String? = null
 )
 
+// TODO: This needs work to be able to handle pagination (if time),
+//  but also needs better separation of concerns (MainScreen composable calls these functions directly)
 class PhotosViewModel(
     private val repository: PhotosRepository
 ) : ViewModel() {
@@ -27,10 +29,35 @@ class PhotosViewModel(
         getRecentPhotos()
     }
 
-    private fun getRecentPhotos() {
+    fun getRecentPhotos() {
         _photosUiState.value = _photosUiState.value.copy(isLoading = true, photos = emptyList())
         viewModelScope.launch {
             val result = repository.getRecentPhotos()
+            when (result) {
+                is NetworkResult.Success -> {
+                    _photosUiState.update {
+                        it.copy(
+                            isLoading = false,
+                            photos = result.data
+                        )
+                    }
+                }
+                is NetworkResult.Error -> {
+                    _photosUiState.update {
+                        it.copy(
+                            isLoading = false,
+                            error = result.message
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    fun searchPhotos(query: String) {
+        _photosUiState.value = _photosUiState.value.copy(isLoading = true, photos = emptyList())
+        viewModelScope.launch {
+            val result = repository.searchPhotos(query)
             when (result) {
                 is NetworkResult.Success -> {
                     _photosUiState.update {

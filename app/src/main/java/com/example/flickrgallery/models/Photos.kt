@@ -15,7 +15,7 @@ import kotlinx.serialization.Serializable
  * }
  */
 @Serializable
-data class RecentPhotos(
+data class Photos(
     val page: Int,
     val pages: Int,
     @SerialName("perpage")

@@ -21,4 +21,14 @@ class PhotosRepositoryImpl(
             }
         }
     }
+    override suspend fun searchPhotos(query: String): NetworkResult<List<PhotoItem>> {
+        return withContext(dispatcher) {
+            try {
+                val searchResults = flickrApiService.searchPhotos(query)
+                NetworkResult.Success(searchResults)
+            } catch (e: Exception) {
+                NetworkResult.Error(e.message ?: "Unknown error")
+            }
+        }
+    }
 }
